@@ -12,7 +12,7 @@ class TaskNotFound(Exception):
 class UpdateTaskError(Exception):
     pass
 
-def create_task(db: Session, task_in: TaskCreate):
+def create_task(task_in: TaskCreate, db: Session):
     query = text("""
         INSERT INTO task (title, description)
         VALUES (:title, :description)
@@ -48,7 +48,7 @@ def read_tasks(db: Session):
     return result.fetchall()
 
 
-def read_task(db: Session, id: int):
+def read_task(id: int, db: Session):
     query = text("""
         SELECT *
         FROM tasks
@@ -59,19 +59,18 @@ def read_task(db: Session, id: int):
     return result.first()
 
 
-def update_task(db: Session, id: int, task_update: TaskUpdate):
+def update_task(id: int, task_update: TaskUpdate, db: Session):
     update_data = task_update.model_dump(exclude_unset=True)
 
     if not update_data:
         raise UpdateTaskError
 
-    if not read_task(db, id):
+    if not read_task(id, db):
         raise TaskNotFound
 
     set_clauses = [f"{key} = :{key}" for key in update_data.keys()]
 
     set_clauses_string = ", ".join(set_clauses)
-
 
     query = text(f"""
         UPDATE tasks
@@ -83,11 +82,11 @@ def update_task(db: Session, id: int, task_update: TaskUpdate):
     db.execute(query, update_data)
     db.commit()        
 
-    return read_task(db, id)
+    return read_task(id, db)
         
 
-def delete_task(db: Session, id: int):
-    if not read_task(db, id):
+def delete_task(id: int, db: Session):
+    if not read_task(id, db):
         raise TaskNotFound
 
     # Implementar verificações...
