@@ -75,9 +75,6 @@ cd app/cli
 python main.py
 ```
 
-**Current CLI functionality:**
-- Basic user interaction with name prompt
-
 **Planned features / Recursos planejados:**
 - Task management commands
 - Rich formatted output
@@ -93,41 +90,6 @@ python main.py
 | `GET` | `/task/{id}` | Retrieve a specific task |
 | `PUT` | `/task/{id}` | Update a task |
 | `DELETE` | `/task/{id}` | Delete a task |
-
-## 📊 Data Models
-
-### Task Schema
-```json
-{
-  "id": 1,
-  "title": "Sample Task",
-  "description": "This is a sample task description"
-}
-```
-
-### Create Task Schema
-```json
-{
-  "title": "New Task",
-  "description": "Task description (optional)"
-}
-```
-
-### Update Task Schema
-```json
-{
-  "title": "Updated Title (optional)",
-  "description": "Updated description (optional)"
-}
-```
-
-## 🛡️ Error Handling
-
-The application includes custom exception handling for:
-
-- `CreateTaskError`: Failed task creation
-- `TaskNotFound`: Task not found in database
-- `UpdateTaskError`: Failed task update
 
 ## 🔧 Dependencies
 
