@@ -3,7 +3,7 @@ from typer import Typer
 app = Typer()
 
 @app.command()
-def hello_world():
+def hello_typer():
     """Hello Typer!"""
     print("Hello, Typer!")
 
